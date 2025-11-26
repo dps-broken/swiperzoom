@@ -4,87 +4,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swiper Zoom Component - Official Docs</title>
+    <title>Swiper Zoom & Thumbnail - Official Documentation</title>
 
-    <!-- Material Design Lite CSS -->
+    <!-- 1. MDL CSS (Material Design Lite) -->
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <!-- Material Icons -->
+    <!-- 2. Material Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <!-- Swiper CSS -->
+    <!-- 3. Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-    <!-- PrismJS for Code Highlighting -->
+    <!-- 4. PrismJS (Code Highlight ke liye) -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
 
     <style>
-        /* --- General Doc Styles --- */
+        /* --- DOCUMENTATION LAYOUT STYLES (MDL Look) --- */
         body {
-            background-color: #f5f5f5;
+            background-color: #fafafa;
             font-family: 'Roboto', sans-serif;
         }
 
-        .mdl-layout__content {
-            padding: 24px;
-        }
-
-        .docs-container {
-            max-width: 1000px;
+        .docs-content {
+            max-width: 1200px;
             margin: 0 auto;
-        }
-
-        .section-title {
-            margin-top: 40px;
-            margin-bottom: 20px;
-            font-weight: 300;
-            color: #3f51b5;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 10px;
-        }
-
-        .code-card {
-            width: 100%;
-            background: #2d2d2d;
-            color: #ccc;
-            padding: 0;
-            margin-bottom: 20px;
-            overflow: visible;
-        }
-
-        pre {
-            margin: 0;
             padding: 20px;
-            border-radius: 4px;
-            max-height: 400px;
-            overflow: auto;
         }
 
-        /* --- COMPONENT STYLES (Your Logic) --- */
-        /* Making it responsive within the doc container */
-        .component-demo-area {
+        .section-header {
+            color: #3f51b5;
+            margin-top: 40px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .code-block {
+            border-radius: 4px;
+            margin: 20px 0;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+        }
+
+        /* --- DEMO AREA WRAPPER --- */
+        .demo-wrapper {
+            background-color: #232323;
+            /* Matching your body bg */
+            padding: 40px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
             justify-content: center;
             align-items: flex-start;
-            padding: 20px;
-            background: #232323; /* Dark background for the component demo */
+            gap: 20px;
+            flex-wrap: wrap;
+            /* Responsive wrapping */
             border-radius: 4px;
-            box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12);
+            box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14);
         }
 
-        .carousel-wrapper {
-            width: 100%;
-            max-width: 600px; /* Constrained width */
+        /* ---------------------------------------------------------
+           AAPKI SPECIFIC CSS (With Responsive Fixes)
+           --------------------------------------------------------- */
+
+        .carousel-container {
+            width: 700px;
+            margin-bottom: 20px;
             position: relative;
+            /* Responsive Fix */
+            max-width: 100%;
         }
 
         .swiper {
             width: 100%;
             height: 400px;
-            border-radius: 8px;
-        }
-
-        .swiper-slide {
-            background: #000;
         }
 
         .swiper-slide img {
@@ -93,67 +80,69 @@
             object-fit: cover;
         }
 
-        /* Thumbnail Styles */
-        .swiper-thumbnail {
-            height: 80px;
-            margin-top: 10px;
+        #target-div {
+            height: 400px;
+            width: 400px;
+            background-color: #3e3e3e;
+            display: none;
+            background-size: cover;
+            position: relative;
+            /* Style to look good in demo */
+            border: 2px solid #fff;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
         }
-        
-        .swiper-thumbnail .swiper-slide img {
-            opacity: 0.4;
-            transition: opacity 0.3s;
-            cursor: pointer;
+
+        /* Helper text for zoom box */
+        #target-div::after {
+            content: 'Zoom Preview';
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            font-size: 12px;
             border-radius: 4px;
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: red;
+        }
+
+        .swiper-thumbnail {
+            width: 700px;
+            /* Original */
+            height: 100px;
+            box-sizing: border-box;
+            margin-top: 10px;
+            /* Responsive Fix */
+            max-width: 100%;
+        }
+
+        .swiper-thumbnail .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.5;
+            cursor: pointer;
         }
 
         .swiper-thumbnail .swiper-slide-thumb-active img {
             opacity: 1;
-            border: 2px solid #fff;
-            box-sizing: border-box;
+            border: 2px solid red;
+            /* Added visual cue */
         }
 
-        /* Navigation Buttons Customization */
-        .swiper-button-next,
-        .swiper-button-prev {
-            color: white;
-            text-shadow: 0 0 5px rgba(0,0,0,0.5);
-        }
-
-        /* ZOOM TARGET DIV STYLES */
-        #target-div {
-            width: 300px;
-            height: 300px;
-            background-color: #333;
-            border: 2px solid #fff;
-            display: none; /* Hidden by default */
-            background-repeat: no-repeat;
-            background-size: 200%; /* Zoom level */
-            border-radius: 8px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            /* Position it */
-            position: relative;
-        }
-        
-        /* Helper text in zoom box */
-        #target-div::after {
-            content: 'Zoom Preview';
-            position: absolute;
-            bottom: 5px;
-            right: 10px;
-            color: white;
-            font-size: 10px;
-            background: rgba(0,0,0,0.5);
-            padding: 2px 5px;
-            border-radius: 3px;
-        }
-
-        @media (max-width: 900px) {
-            .component-demo-area {
-                flex-direction: column;
-                align-items: center;
-            }
+        /* Mobile Hide Zoom */
+        @media (max-width: 1150px) {
             #target-div {
-                display: none !important; /* Hide zoom on small screens as hover doesn't exist */
+                display: none !important;
+                /* Hide zoom on smaller screens/tablets */
+            }
+
+            .demo-wrapper {
+                justify-content: center;
             }
         }
     </style>
@@ -162,57 +151,67 @@
 <body>
 
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <!-- HEADER -->
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row">
-                <!-- Title -->
-                <span class="mdl-layout-title">ZoomSwiper Documentation</span>
+                <span class="mdl-layout-title">Swiper Zoom Component</span>
                 <div class="mdl-layout-spacer"></div>
-                <!-- Navigation -->
                 <nav class="mdl-navigation mdl-layout--large-screen-only">
                     <a class="mdl-navigation__link" href="#demo">Live Demo</a>
-                    <a class="mdl-navigation__link" href="#usage">Usage</a>
-                    <a class="mdl-navigation__link" href="#api">API</a>
+                    <a class="mdl-navigation__link" href="#code">Source Code</a>
                 </nav>
             </div>
         </header>
+
+        <!-- DRAWER (Sidebar) -->
         <div class="mdl-layout__drawer">
             <span class="mdl-layout-title">Menu</span>
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="#demo">Live Demo</a>
-                <a class="mdl-navigation__link" href="#usage">Installation</a>
                 <a class="mdl-navigation__link" href="#html">HTML Structure</a>
-                <a class="mdl-navigation__link" href="#js">JS Logic</a>
+                <a class="mdl-navigation__link" href="#css">CSS Styles</a>
+                <a class="mdl-navigation__link" href="#js">JavaScript Logic</a>
             </nav>
         </div>
 
         <main class="mdl-layout__content">
-            <div class="docs-container">
+            <div class="docs-content">
 
-                <!-- INTRO -->
-                <div class="mdl-card mdl-shadow--2dp" style="width:100%; padding:20px; margin-bottom:20px;">
-                    <h2 class="mdl-card__title-text" style="font-size: 24px;">Introduction</h2>
+                <!-- INTRO CARD -->
+                <div class="mdl-card mdl-shadow--2dp" style="width: 100%; padding: 20px; margin-bottom: 30px;">
+                    <h2 class="mdl-card__title-text" style="font-size: 24px; color:#222;">Introduction</h2>
                     <p>
-                        The <strong>ZoomSwiper</strong> component is a responsive image carousel built on top of SwiperJS.
-                        It features a thumbnail navigation strip and a high-performance "magnifying glass" effect that
-                        renders a zoomed preview in an external container based on the cursor position.
+                        This documentation explains how to implement a <strong>Swiper Carousel</strong> with
+                        <strong>Thumbnail Navigation</strong> and a <strong>Hover Zoom Effect</strong>.
+                        Perfect for E-commerce product galleries.
                     </p>
                 </div>
 
                 <!-- LIVE DEMO SECTION -->
-                <h3 class="section-title" id="demo">Live Interactive Demo</h3>
-                <p>Hover over the main image to see the zoom effect on the right panel.</p>
-                
-                <div class="component-demo-area">
-                    <!-- CAROUSEL WRAPPER -->
-                    <div class="carousel-wrapper">
+                <h3 class="section-header" id="demo">Live Preview</h3>
+                <p>Hover over the main image to see the zoomed details on the right.</p>
+
+                <div class="demo-wrapper">
+
+                    <!-- YOUR CAROUSEL CODE START -->
+                    <div class="carousel-container">
                         <!-- Main Swiper -->
                         <div class="swiper main-swiper">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1763244737734-615f8c07030a?q=80&w=1465&auto=format&fit=crop" alt=""></div>
-                                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1763793926409-c5714bfe1de4?q=80&w=2070&auto=format&fit=crop" alt=""></div>
-                                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1763503836825-97f5450d155a?q=80&w=880&auto=format&fit=crop" alt=""></div>
-                                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1763718678099-fdb5c2f9cc50?q=80&w=1113&auto=format&fit=crop" alt=""></div>
+                                <div class="swiper-slide"><img
+                                        src="https://images.unsplash.com/photo-1763244737734-615f8c07030a?q=80&w=1465&auto=format&fit=crop"
+                                        alt=""></div>
+                                <div class="swiper-slide"><img
+                                        src="https://images.unsplash.com/photo-1763793926409-c5714bfe1de4?q=80&w=2070&auto=format&fit=crop"
+                                        alt=""></div>
+                                <div class="swiper-slide"><img
+                                        src="https://images.unsplash.com/photo-1763503836825-97f5450d155a?q=80&w=880&auto=format&fit=crop"
+                                        alt=""></div>
+                                <div class="swiper-slide"><img
+                                        src="https://images.unsplash.com/photo-1763718678099-fdb5c2f9cc50?q=80&w=1113&auto=format&fit=crop"
+                                        alt=""></div>
                             </div>
+                            <!-- Navigation -->
                             <div class="swiper-button-next"></div>
                             <div class="swiper-button-prev"></div>
                         </div>
@@ -220,34 +219,47 @@
                         <!-- Thumbnail Swiper -->
                         <div class="swiper swiper-thumbnail">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1763244737734-615f8c07030a?q=80&w=1465&auto=format&fit=crop" alt=""></div>
-                                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1763793926409-c5714bfe1de4?q=80&w=2070&auto=format&fit=crop" alt=""></div>
-                                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1763503836825-97f5450d155a?q=80&w=880&auto=format&fit=crop" alt=""></div>
-                                <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1763718678099-fdb5c2f9cc50?q=80&w=1113&auto=format&fit=crop" alt=""></div>
+                                <div class="swiper-slide"><img
+                                        src="https://images.unsplash.com/photo-1763244737734-615f8c07030a?q=80&w=1465&auto=format&fit=crop"
+                                        alt=""></div>
+                                <div class="swiper-slide"><img
+                                        src="https://images.unsplash.com/photo-1763793926409-c5714bfe1de4?q=80&w=2070&auto=format&fit=crop"
+                                        alt=""></div>
+                                <div class="swiper-slide"><img
+                                        src="https://images.unsplash.com/photo-1763503836825-97f5450d155a?q=80&w=880&auto=format&fit=crop"
+                                        alt=""></div>
+                                <div class="swiper-slide"><img
+                                        src="https://images.unsplash.com/photo-1763718678099-fdb5c2f9cc50?q=80&w=1113&auto=format&fit=crop"
+                                        alt=""></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- ZOOM TARGET -->
+                    <!-- Target Div for Zoom -->
                     <div id="target-div"></div>
+                    <!-- YOUR CAROUSEL CODE END -->
+
                 </div>
 
-                <!-- USAGE SECTION -->
-                <h3 class="section-title" id="usage">Installation</h3>
-                <p>Include Swiper CSS and JS in your project before adding the custom logic.</p>
-                <div class="mdl-card code-card mdl-shadow--2dp">
-<pre><code class="language-html">&lt;!-- CSS --&gt;
+                <!-- DOCUMENTATION TABS -->
+                <div id="code">
+                    <h3 class="section-header" id="installation">Installation</h3>
+                    <p>Include Swiper CSS and JS in your project before adding the custom logic.</p>
+                    <div class="code-block">
+                        <pre><code class="language-html">&lt;!-- CSS --&gt;
 &lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" /&gt;
 
 &lt;!-- JS --&gt;
 &lt;script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"&gt;&lt;/script&gt;</code></pre>
-                </div>
+                    </div>
 
-                <!-- HTML STRUCTURE -->
-                <h3 class="section-title" id="html">HTML Structure</h3>
-                <p>The structure consists of a wrapper containing two Swiper instances (Main & Thumb) and a separate Target Div for the zoom effect.</p>
-                <div class="mdl-card code-card mdl-shadow--2dp">
-<pre><code class="language-html">&lt;div class="carousel-container"&gt;
+                    <!-- HTML -->
+                    <h3 class="section-header" id="html">1. HTML Structure</h3>
+                    <p>Create a container for the carousel and a separate div for the zoom target.</p>
+                    <div class="code-block">
+                        <pre><code class="language-html">&lt;!-- Main Container --&gt;
+&lt;div class="carousel-container"&gt;
+    
     &lt;!-- Main Swiper --&gt;
     &lt;div class="swiper main-swiper"&gt;
         &lt;div class="swiper-wrapper"&gt;
@@ -258,7 +270,7 @@
         &lt;div class="swiper-button-prev"&gt;&lt;/div&gt;
     &lt;/div&gt;
 
-    &lt;!-- Thumbnail Swiper --&gt;
+    &lt;!-- Thumbnails --&gt;
     &lt;div class="swiper swiper-thumbnail"&gt;
         &lt;div class="swiper-wrapper"&gt;
             &lt;div class="swiper-slide"&gt;&lt;img src="image1.jpg"&gt;&lt;/div&gt;
@@ -269,48 +281,114 @@
 
 &lt;!-- Zoom Target --&gt;
 &lt;div id="target-div"&gt;&lt;/div&gt;</code></pre>
-                </div>
+                    </div>
 
-                <!-- JS LOGIC -->
-                <h3 class="section-title" id="js">JavaScript Logic</h3>
-                <p>This script handles the synchronization between the two sliders and calculates the background position for the zoom effect.</p>
-                <div class="mdl-card code-card mdl-shadow--2dp">
-<pre><code class="language-javascript">// 1. Initialize Thumbnails
+                    <!-- CSS -->
+                    <h3 class="section-header" id="css">2. CSS Styles</h3>
+                    <p>Use the following CSS to style the layout and handle the hidden zoom div.</p>
+                    <div class="code-block">
+                        <pre><code class="language-css">/* Container Setup */
+.carousel-container {
+    width: 700px;
+    margin-bottom: 20px;
+    position: relative;
+    max-width: 100%; /* Makes it responsive */
+}
+
+.swiper {
+    width: 100%;
+    height: 400px;
+}
+
+.swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Zoom Target Box */
+#target-div {
+    height: 400px;
+    width: 400px;
+    background-color: #3e3e3e;
+    display: none; /* Hidden by default */
+    background-size: cover;
+    position: relative;
+}
+
+/* Navigation Arrows */
+.swiper-button-next,
+.swiper-button-prev {
+    color: red;
+}
+
+/* Thumbnails */
+.swiper-thumbnail {
+    width: 700px;
+    height: 100px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    max-width: 100%; /* Makes it responsive */
+}
+
+.swiper-thumbnail .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.swiper-thumbnail .swiper-slide-thumb-active img {
+    opacity: 1;
+}</code></pre>
+                    </div>
+
+                    <!-- JS -->
+                    <h3 class="section-header" id="js">3. JavaScript Logic</h3>
+                    <p>Initialize Swiper instances and handle the `mousemove` event for the zoom effect.</p>
+                    <div class="code-block">
+                        <pre><code class="language-javascript">// 1. Initialize Thumbnails
 const thumbSwiper = new Swiper('.swiper-thumbnail', {
     slidesPerView: 4,
     spaceBetween: 10,
     watchSlidesProgress: true,
 });
 
-// 2. Initialize Main Slider
+// 2. Initialize Main Carousel linked to Thumbnails
 const mainSwiper = new Swiper('.main-swiper', {
     loop: true,
-    autoplay: { delay: 2000, disableOnInteraction: false },
+    autoplay: {
+        delay: 2000,
+        disableOnInteraction: false,
+    },
     navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
     },
-    thumbs: { swiper: thumbSwiper },
+    thumbs: {
+        swiper: thumbSwiper,
+    },
 });
 
-// 3. Stop Autoplay on Hover
-const container = document.querySelector('.main-swiper');
-container.addEventListener('mouseenter', () => mainSwiper.autoplay.stop());
-container.addEventListener('mouseleave', () => mainSwiper.autoplay.start());
+// 3. Pause Autoplay on Hover
+const swiperContainer = document.querySelector('.main-swiper');
+swiperContainer.addEventListener('mouseenter', () => mainSwiper.autoplay.stop());
+swiperContainer.addEventListener('mouseleave', () => mainSwiper.autoplay.start());
 
-// 4. Zoom Logic
+// 4. Zoom Effect Logic
 const targetDiv = document.getElementById('target-div');
 const slides = document.querySelectorAll('.main-swiper .swiper-slide');
 
 slides.forEach(slide => {
-    // Show Zoom Box & Set Image
+    // Show Zoom Div
     slide.addEventListener('mouseenter', () => {
         targetDiv.style.display = 'block';
         const img = slide.querySelector('img').src;
         targetDiv.style.backgroundImage = `url(${img})`;
     });
 
-    // Hide Zoom Box
+    // Hide Zoom Div
     slide.addEventListener('mouseleave', () => {
         targetDiv.style.display = 'none';
     });
@@ -318,43 +396,43 @@ slides.forEach(slide => {
     // Calculate Background Position
     slide.addEventListener('mousemove', (e) => {
         const rect = slide.getBoundingClientRect();
-        // Calculate cursor position relative to image
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
-        // Convert to Percentage
         const posX = (x / rect.width) * 100;
         const posY = (y / rect.height) * 100;
-        
-        // Move background image inside target div
         targetDiv.style.backgroundPosition = `${posX}% ${posY}%`;
     });
 });</code></pre>
+                    </div>
+
                 </div>
 
-                <div style="height: 100px;"></div> <!-- Spacer -->
+                <div style="text-align:center; padding: 40px; color: #888;">
+                    <small>Official Documentation | Built with SwiperJS & MDL</small>
+                </div>
+
             </div>
         </main>
     </div>
 
-    <!-- MDL JS -->
+    <!-- SCRIPTS -->
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <!-- Prism JS for Highlighting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
 
-    <!-- FUNCTIONALITY SCRIPT (The actual working code for demo) -->
     <script>
+        // --- ACTUAL WORKING CODE FOR THE DEMO ---
+
         // Initialize Thumbnail Swiper
         const thumbSwiper = new Swiper('.swiper-thumbnail', {
             slidesPerView: 4,
             spaceBetween: 10,
             watchSlidesProgress: true,
             breakpoints: {
-                320: { slidesPerView: 3 },
-                640: { slidesPerView: 4 }
+                320: { slidesPerView: 3 }, // Mobile responsive
+                600: { slidesPerView: 4 }
             }
         });
 
@@ -385,22 +463,17 @@ slides.forEach(slide => {
             mainSwiper.autoplay.start();
         });
 
-        // Hover preview Logic
-        const targetDiv = document.getElementById('target-div');
-        // Note: Swiper duplicates slides for loop mode. We need to select all current slides.
-        // Re-selecting inside event or using delegation is safer, but for this demo:
-        
-        // Helper function to attach events (handles Swiper loop duplicates)
-        function attachZoomEvents() {
-            const slides = document.querySelectorAll('.main-swiper .swiper-slide');
-            slides.forEach(slide => {
-                // Avoid attaching double events if re-initialized
-                if(slide.getAttribute('data-zoom-init')) return;
-                slide.setAttribute('data-zoom-init', 'true');
 
+        // Hover preview
+        const targetDiv = document.getElementById('target-div');
+
+        // Note: Using delegation or simple selection. 
+        // Swiper loop creates duplicate slides, so we select all visually active slides.
+        function initZoomEvents() {
+            document.querySelectorAll('.main-swiper .swiper-slide').forEach(slide => {
                 slide.addEventListener('mouseenter', (e) => {
-                    // Only show if not mobile (simple check)
-                    if(window.innerWidth > 900) {
+                    // Disable zoom on mobile check
+                    if (window.innerWidth > 1150) {
                         targetDiv.style.display = 'block';
                         const img = slide.querySelector('img').src;
                         targetDiv.style.backgroundImage = `url(${img})`;
@@ -422,11 +495,10 @@ slides.forEach(slide => {
             });
         }
 
-        // Attach initially
-        attachZoomEvents();
-        
-        // Re-attach on slide change (sometimes needed for Loop mode DOM manipulation)
-        mainSwiper.on('slideChangeTransitionEnd', attachZoomEvents);
+        initZoomEvents();
+
+        // Re-init events when slide changes (for loop duplicates)
+        mainSwiper.on('slideChangeTransitionEnd', initZoomEvents);
 
     </script>
 </body>
